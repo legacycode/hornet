@@ -2,13 +2,16 @@
 
 ## Table of contents
 
-- [Requirements](#requirements)
-- [Quick Start](#quick-start)
-  - [Clone Repository](#clone-repository)
-  - [Prepare](#prepare)
-  - [Docker Compose](#docker-compose)
-  - [Build Image](#build-image)
-  - [Run](#run)
+- [HORNET in Docker](#hornet-in-docker)
+  - [Table of contents](#table-of-contents)
+  - [Requirements](#requirements)
+  - [Quick Start](#quick-start)
+    - [Clone Repository](#clone-repository)
+    - [Prepare](#prepare)
+    - [Docker Compose](#docker-compose)
+    - [Build Image](#build-image)
+    - [Run](#run)
+    - [Create username and password for the Hornet dashboard](#create-username-and-password-for-the-hornet-dashboard)
 
 ## Requirements
 
@@ -99,3 +102,30 @@ docker run --rm \
 ```
 
 Use CTRL-c to gracefully end the process.
+
+### Create username and password for the Hornet dashboard
+
+If you use the Hornet dashboard you need to create a secure password. Start your Hornet container and run the following command:
+
+```sh
+docker exec -it hornet /app/hornet tool pwdhash
+
+Re-enter your password:
+Success!
+Your hash: a24c5f65afd0ff0a37af47ff8c02a60971f097b1fd8f7e3739105cca9bf294c4
+Your salt: 808fe4e5cd22c8bc7d8b0d34f2d7b96325a9f0d6e633f3241a1be1ff537e956c
+```
+
+Edit config.json and customize the "dashboard" section to your needs.
+
+```sh
+  "dashboard": {
+    "bindAddress": "0.0.0.0:8081",
+    "auth": {
+      "sessionTimeout": "72h",
+      "username": "admin",
+      "passwordHash": "a24c5f65afd0ff0a37af47ff8c02a60971f097b1fd8f7e3739105cca9bf294c4",
+      "passwordSalt": "808fe4e5cd22c8bc7d8b0d34f2d7b96325a9f0d6e633f3241a1be1ff537e956c"
+    }
+  },
+```
