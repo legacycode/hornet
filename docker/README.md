@@ -1,1 +1,1 @@
-D:/workspace/hornet/docs/getting_started/docker.md
+../docs/getting_started/docker.md
